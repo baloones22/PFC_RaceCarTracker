@@ -5,6 +5,7 @@ class Championship extends Model {
         super.init(
             {
                 name: Sequelize.STRING,
+                categoryId:Sequelize.INTEGER,
             },
             {
                 sequelize
@@ -13,7 +14,9 @@ class Championship extends Model {
 
         return this;
     }
-    
+    static associate(models){
+        this.belongsTo(models.Category, {as: 'category', foreignKey: 'categoryId'});
+    }
 }
 
 export default Championship;

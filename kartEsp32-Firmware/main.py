@@ -1,9 +1,10 @@
 from machine import Pin, Timer
 from time import sleep, ticks_ms
 import urequests
+
 motion = False
-print('Microcontrollerslab.com')
-URL_API = "http://192.168.1.13:3000"
+print("Microcontrollerslab.com")
+URL_API = "http://192.168.1.1:3000"
 timer0 = Timer(0)  # create as instance of the timer 0 of the esp
 led = Pin(14, Pin.OUT)  # 22 number in is Output
 carLed = Pin(2, Pin.OUT)  # 22 number in is Output
@@ -15,17 +16,13 @@ initialLapTime = 0
 startedRound = False
 
 
-
 def getCurrent():
     global currentCar
-    print('Buscando carro!')
+    print("Buscando carro!")
     req = urequests.get(URL_API + "/track/current")
     if req.status_code == 200:
         res = req.json()
-        currentCar = {
-            "car": res[0]["car"]["_id"],
-            "round": res[0]["round"]["_id"]
-        }
+        currentCar = {"car": res[0]["car"]["_id"], "round": res[0]["round"]["_id"]}
         carLed.value(1)
         print(currentCar)
 
@@ -44,7 +41,6 @@ def registerLapTime(lapTime, currentCar):
             carLed.value(0)
 
 
-
 def handle_interrupt(pin):
     global counterLap
     global initialLapTime
@@ -56,17 +52,16 @@ def handle_interrupt(pin):
         if not startedRound:
             initialLapTime = ticks_ms()
             startedRound = True
-            print('Bateria Iniciada!')
+            print("Bateria Iniciada!")
         else:
             lapTime = ticks_ms() - initialLapTime
             initialLapTime = ticks_ms()
             counterLap += 1
-            lapTimeFormated = "{}:{}:{}".format((lapTime//(60000))%60, (lapTime//1000)%60, lapTime%1000)
+            lapTimeFormated = "{}:{}:{}".format(
+                (lapTime // (60000)) % 60, (lapTime // 1000) % 60, lapTime % 1000
+            )
             print("volta {}: {}".format(counterLap, lapTimeFormated))
-            registerLapTime(lapTimeFormated,currentCar)
-
-
-
+            registerLapTime(lapTimeFormated, currentCar)
 
     # if counterLap == 0:
     #     initialLapTime = ticks_ms()

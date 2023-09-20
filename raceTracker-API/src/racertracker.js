@@ -1,12 +1,10 @@
-import express from 'express'
+const express= require('express');
 import cors from 'cors'
 import http from 'http'
 import socketio from 'socket.io'
 import routes from './routes'
-
 import registerLap from './websocket_functions'
-
-import './database'
+require('./database')
 
 class RacerTrack {
     constructor(){
@@ -42,4 +40,4 @@ class RacerTrack {
     }
 }
 
-export default new RacerTrack().http_server;
+export default new RacerTrack().server;

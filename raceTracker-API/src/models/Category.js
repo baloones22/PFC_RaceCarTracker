@@ -1,4 +1,5 @@
-import Sequelize, { Model } from 'sequelize';
+const Sequelize= require('sequelize');
+const { Model }=require('sequelize')
 
 class Category extends Model {
     static init(sequelize){

@@ -1,3 +1,3 @@
 import racertracker from './racertracker'
-
-racertracker.listen(3000)
+console.log('rodando na porta 3333')
+racertracker.listen(3333)

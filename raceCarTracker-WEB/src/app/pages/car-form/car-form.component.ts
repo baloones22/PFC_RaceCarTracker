@@ -67,9 +67,7 @@ export class CarFormComponent
 
   getCategories() {
     this.categoryService
-      .getAll()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
+      .getAll().pipe(takeUntil(this.unsubscribe$)).subscribe(
         (ans: any) => {
           this.categories = ans;
           console.log(this.categories);

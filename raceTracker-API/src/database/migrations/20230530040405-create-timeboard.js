@@ -1,8 +1,6 @@
-'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  up (queryInterface, Sequelize) {
     return queryInterface.createTable('timeboards', {
       id: {
         type: Sequelize.INTEGER,
@@ -51,11 +49,19 @@ module.exports = {
       finished_round: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
+      },
+      created_at:{
+        type: Sequelize.DATE,
+        allowNull:false,
+      },
+      updated_at:{
+        type: Sequelize.DATE,
+        allowNull:false,
       }
     });
   },
 
-  async down (queryInterface, Sequelize) {
+  down (queryInterface, Sequelize) {
     return queryInterface.dropTable('timeboard');
   }
 };

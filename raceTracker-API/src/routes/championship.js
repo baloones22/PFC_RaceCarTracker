@@ -8,6 +8,7 @@ championship_routes.post('/championship', ChampionshipController.store);
 
 championship_routes.get('/championship', ChampionshipController.index);
 
-championship_routes.get('/championship/:id', ChampionshipController.show);
+championship_routes.get('/championship/:champId', ChampionshipController.show);
+championship_routes.delete('/championship/:champId', ChampionshipController.delete);
 
 export default championship_routes;

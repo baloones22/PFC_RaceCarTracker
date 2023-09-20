@@ -1,8 +1,6 @@
-'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  up (queryInterface, Sequelize) {
     return queryInterface.createTable('cars', {
       id: {
         type: Sequelize.INTEGER,
@@ -35,15 +33,22 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'categories',
-          key: 'id'
+          key: 'id' }
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      }
-    });
+      created_at:{
+          type: Sequelize.DATE,
+          allowNull:false,
+        },
+      updated_at:{
+          type: Sequelize.DATE,
+          allowNull:false,
+        }
+        //onUpdate: 'CASCADE',
+        //onDelete: 'CASCADE',
+      });
   },
 
-  async down (queryInterface, Sequelize) {
+  down (queryInterface, Sequelize) {
     return queryInterface.dropTable('cars');
   }
 };
