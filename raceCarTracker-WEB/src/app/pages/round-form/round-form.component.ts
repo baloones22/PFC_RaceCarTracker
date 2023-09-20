@@ -9,6 +9,7 @@ import { NbToastrService } from "@nebular/theme";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { CarService } from "../shared/services/car.service";
+import { Category } from "./../shared/models/category-model";
 import { CategoryService } from "../shared/services/category.service";
 import { Championship, ChampionshipService } from "../shared/services/championship.service";
 import { RoundService } from "../shared/services/round.service";
@@ -23,6 +24,7 @@ export class RoundFormComponent
   private unsubscribe$ = new Subject<void>();
   roundForm!: FormGroup;
   championshipForm!: FormGroup;
+  categories: Category[] = [];
 
   pageTitle: string = "Cadastro de bateria";
   championships: Championship[] = [];
@@ -30,12 +32,14 @@ export class RoundFormComponent
   constructor(
     private formBuilder: FormBuilder,
     private championshipService: ChampionshipService,
+    private categoryService: CategoryService,
     private roundService: RoundService,
     private toastrService: NbToastrService
   ) { }
 
   ngOnInit(): void {
     this.getChampionships();
+    this.getCategories();
     this.buildRoundForm();
     this.buildChampionshipForm();
   }
@@ -72,6 +76,7 @@ export class RoundFormComponent
   private buildChampionshipForm() {
     this.championshipForm = this.formBuilder.group({
       name: [null],
+      category: [null],
     });
   }
 
@@ -86,6 +91,18 @@ export class RoundFormComponent
         },
         (error) => {
           alert("Não foi possível obter os campeonatos.");
+        }
+      );
+  }
+  getCategories() {
+    this.categoryService
+      .getAll().pipe(takeUntil(this.unsubscribe$)).subscribe(
+        (ans: any) => {
+          this.categories = ans;
+          console.log(this.categories);
+        },
+        (error) => {
+          alert("Não foi possível obter as categorias.");
         }
       );
   }
@@ -121,6 +138,7 @@ export class RoundFormComponent
     const newChampioship = {
 
       "name": this.championshipForm.get("name")?.value,
+      category: this.championshipForm.get("category")?.value,
     }
     this.championshipService
       .create(newChampioship)
