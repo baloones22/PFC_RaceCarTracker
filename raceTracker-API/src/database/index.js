@@ -5,6 +5,7 @@ import Category from '../models/Category';
 import Championship from '../models/Championship';
 import Laptime from '../models/Laptime';
 import Timeboard from '../models/Timeboard';
+import Sensor from '../models/Sensor';
 import dataBaseConfig from '../config/database';
 
 const models = [
@@ -12,7 +13,8 @@ const models = [
     Category,
     Championship,
     Laptime,
-    Timeboard
+    Timeboard,
+    Sensor
 ]
 
 class Database{

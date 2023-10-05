@@ -8,7 +8,6 @@ class Car extends Model {
                 plate: Sequelize.STRING,
                 model: Sequelize.STRING,
                 owner: Sequelize.STRING,
-                categoryId:Sequelize.INTEGER,
                 on_track: Sequelize.BOOLEAN                
             },
             {
@@ -20,7 +19,7 @@ class Car extends Model {
     }
 
     static associate(models){
-        this.belongsTo(models.Category, {as: 'category', foreignKey: 'categoryId'});
+        this.belongsTo(models.Category, {as: 'category', foreignKey: 'category_id'});
     }
 }
 

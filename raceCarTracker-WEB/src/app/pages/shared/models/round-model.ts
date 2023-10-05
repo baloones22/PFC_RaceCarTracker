@@ -1,8 +1,9 @@
 export interface Round {
-    _id: string;
+    id: string;
     name: number;
     championship: {
-        _id: string;
+        id: string;
         name: string;
+        category: string;
     };
 }

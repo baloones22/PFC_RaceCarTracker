@@ -33,8 +33,9 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'categories',
-          key: 'id' }
+          key: 'id'
         },
+      },
       created_at:{
           type: Sequelize.DATE,
           allowNull:false,

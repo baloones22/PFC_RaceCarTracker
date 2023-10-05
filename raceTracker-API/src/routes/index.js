@@ -5,6 +5,7 @@ import category_routes from './category';
 import championship_routes from './championship';
 import laptime_routes from './laptime';
 import timeboard_routes from './timeboard';
+import sensor_routes from './sensor'
 
 const routes = new Router();
 
@@ -20,5 +21,6 @@ routes.use(category_routes);
 routes.use(championship_routes);
 routes.use(laptime_routes);
 routes.use(timeboard_routes);
+routes.use(sensor_routes);
 
 export default routes;

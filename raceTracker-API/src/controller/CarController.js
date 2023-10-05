@@ -14,8 +14,8 @@ class CarController {
             plate: Yup.string().required(),
             model: Yup.string().required(),
             owner: Yup.string().required(),
-            on_track: Yup.boolean().required(),
-            categoryId: Yup.number().required().positive().integer(),});
+            on_track: Yup.boolean(),
+            category_id: Yup.number().required().positive().integer(),});
             if(!( await schema.isValid(req.body))) {
                 return res.status(400).json({ error: "validation fails from yup" })
               }
@@ -24,7 +24,7 @@ class CarController {
             const carExist = await Car.findOne({ where: { plate: req.body.plate}});
             if(carExist) {
                 return res.status(400).json({ error: "Car already exists."});}
-            const category = await Category.findOne({where: {id: req.body.categoryId}});
+            const category = await Category.findOne({where: {id: req.body.category_id}});
         if(!category){
             return res.status(400).json({ error: "Car needs a valid category" });
         }
@@ -37,7 +37,7 @@ class CarController {
 
     async index(req, res){
         try { 
-        const { categoryId } = req.params;        
+        const { category_id } = req.params;        
             const cars = await Car.findAll({
                 include: [{
                         model: Category,
@@ -76,7 +76,7 @@ class CarController {
                     }}
 
     async current_on_track(req, res){
-        const car = await Car.findOne({
+        try{ const car = await Car.findAll({
             where:{on_track: true},include:[{
                     model: Category,
                     as: 'category'
@@ -96,6 +96,26 @@ class CarController {
             return res.json(timeboard);}
         else {
             return res.json(null)}}
+            catch (err) {
+                console.log(err)            
+                }}
+            
+            async on_track(req, res){
+                try{
+                const schema = Yup.object().shape({
+                car: Yup.string().required(),});
+                if(!( await schema.isValid(req.body))) {
+                    return res.status(400).json({ error: "validation fails from yup" })}
+                const carId=req.body.car
+                const car = await Car.findByPk(carId);
+                if(car.on_track==true){
+                    return res.status(400).json({ error: "Car already on a track."});  }
+                else {
+                    car.on_track=true
+                return res.json(car)}}
+                catch (err) {
+                    console.log(err)            
+                    }}
         
         
             async delete(req, res){

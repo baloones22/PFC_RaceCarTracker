@@ -66,8 +66,8 @@
 
                 <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
                     <label for="category" class="label">Categoria</label>
-                    <nb-select fullWidth id="category" placeholder="Categoria" formControlName="category">
-                        <nb-option *ngFor="let category of categories" [value]="category._id">{{category.description}}
+                    <nb-select fullWidth id="category" placeholder="Categoria" formControlName="category" (selectedChange)="getCategories">
+                        <nb-option *ngFor="let category of categories" [value]="category.id">{{category.name}}
                         </nb-option>
                     </nb-select>
                     <!-- <div class="text-danger"

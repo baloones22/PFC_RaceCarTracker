@@ -4,7 +4,7 @@ import {
   OnDestroy,
   OnInit,
 } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { NbToastrService } from "@nebular/theme";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -19,18 +19,19 @@ import { RoundService } from "../shared/services/round.service";
   templateUrl: "./round-form.component.html",
   styleUrls: ["./round-form.component.scss"],
 })
+
 export class RoundFormComponent
   implements OnInit, OnDestroy, AfterContentChecked {
   private unsubscribe$ = new Subject<void>();
-  roundForm!: FormGroup;
-  championshipForm!: FormGroup;
+  roundForm!: UntypedFormGroup;
+  championshipForm!: UntypedFormGroup;
   categories: Category[] = [];
 
   pageTitle: string = "Cadastro de bateria";
   championships: Championship[] = [];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private championshipService: ChampionshipService,
     private categoryService: CategoryService,
     private roundService: RoundService,
@@ -138,7 +139,7 @@ export class RoundFormComponent
     const newChampioship = {
 
       "name": this.championshipForm.get("name")?.value,
-      category: this.championshipForm.get("category")?.value,
+      "categoryId": this.championshipForm.get("category")?.value,
     }
     this.championshipService
       .create(newChampioship)
@@ -163,7 +164,7 @@ export class RoundFormComponent
       );
   }
 
-  private markFormGroupTouched(formGroup: FormGroup) {
+  private markFormGroupTouched(formGroup: UntypedFormGroup) {
     (<any>Object).values(formGroup.controls).forEach((control: any) => {
       control.markAsTouched();
 

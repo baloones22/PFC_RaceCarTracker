@@ -5,7 +5,7 @@ import { catchError, map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 
 export interface Championship {
-  _id?: string;
+  id?: string;
   name: string;
 }
 

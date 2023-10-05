@@ -7,7 +7,7 @@ import {
   OnDestroy,
   OnInit,
 } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { NbToastrService } from "@nebular/theme";
@@ -21,12 +21,12 @@ export class CarFormComponent
   implements OnInit, OnDestroy, AfterContentChecked
 {
   private unsubscribe$ = new Subject<void>();
-  carForm!: FormGroup;
+  carForm!: UntypedFormGroup;
   pageTitle: string = "Cadastro de carro";
   categories: Category[] = [];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private categoryService: CategoryService,
     private carService: CarService,
     private toastrService: NbToastrService
@@ -84,7 +84,7 @@ export class CarFormComponent
       model: this.carForm.get("model")?.value,
       owner: this.carForm.get("owner")?.value,
       plate: this.carForm.get("plate")?.value,
-      category: this.carForm.get("category")?.value,
+      category_id: this.carForm.get("category")?.value,
     };
 
     this.carService
@@ -113,7 +113,7 @@ export class CarFormComponent
       );
   }
 
-  private markFormGroupTouched(formGroup: FormGroup) {
+  private markFormGroupTouched(formGroup: UntypedFormGroup) {
     (<any>Object).values(formGroup.controls).forEach((control: any) => {
       control.markAsTouched();
 

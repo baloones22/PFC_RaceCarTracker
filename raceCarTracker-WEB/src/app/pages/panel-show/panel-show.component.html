@@ -8,7 +8,7 @@
             <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
                 <label for="championship" class="label">Campeonato</label>
                 <nb-select (selectedChange)="getRoundByChampionship($event)" fullWidth placeholder="Campeonato">
-                    <nb-option *ngFor="let championship of championships" [value]="championship._id">
+                    <nb-option *ngFor="let championship of championships" [value]="championship.id">
                         {{championship.name}}
                     </nb-option>
                 </nb-select>
@@ -18,7 +18,7 @@
                 <label for="championship" class="label">Baterias</label>
                 <nb-select [disabled]="rounds.length ==0" [(selected)]="selected"
                     (selectedChange)="getCarsByRound($event)" fullWidth placeholder="Bateria">
-                    <nb-option *ngFor="let round of rounds" [value]="round._id">
+                    <nb-option *ngFor="let round of rounds" [value]="round.id">
                         {{round.name}}
                     </nb-option>
                 </nb-select>
@@ -28,7 +28,7 @@
                 <label for="championship" class="label">Enviar Carro Para Pista:</label>
                 <nb-select [disabled]="cars.length ==0" (selectedChange)="sendCarToTrack($event)" fullWidth
                     placeholder="Carro">
-                    <nb-option *ngFor="let car of cars" [value]="car._id">
+                    <nb-option *ngFor="let car of cars" [value]="car.id">
                         {{car.name}}
                     </nb-option>
                 </nb-select>
