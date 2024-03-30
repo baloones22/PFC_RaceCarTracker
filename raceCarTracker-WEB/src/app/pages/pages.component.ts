@@ -21,9 +21,24 @@ export class PagesComponent implements OnInit {
       label: "Cadastro Carro",
     },
     {
+      url: "/championship-form",
+      icon: "dashboard_customize",
+      label: "Cadastro Campeonato",
+    },
+    {
+      url: "/category-form",
+      icon: "dashboard_customize",
+      label: "Cadastro Categoria",
+    },
+    {
       url: "/round-form",
       icon: "dashboard_customize",
-      label: "Cadastro de Bateria e Campeonato",
+      label: "Cadastro de baterias",
+    },
+    {
+      url: "/laptime-form",
+      icon: "dashboard_customize",
+      label: "Cadastro de Tempos",
     },
     {
       url: "/panel",

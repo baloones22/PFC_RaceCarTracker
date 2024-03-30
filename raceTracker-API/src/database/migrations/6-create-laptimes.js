@@ -34,7 +34,27 @@ module.exports = {
       updated_at:{
         type: Sequelize.DATE,
         allowNull:false,
-      }
+      },
+      battery: {
+        type: Sequelize.INTEGER,
+				allowNull: true
+      },
+      championship_id: {
+        type: Sequelize.INTEGER,
+				allowNull: false,
+        references: {
+          model: 'championships',
+          key: 'id' 
+        }
+      },
+      car_id: {
+        type: Sequelize.INTEGER,
+				allowNull: false,
+        references: {
+          model: 'cars',
+          key: 'id' 
+        }
+      },
     });
   },
 

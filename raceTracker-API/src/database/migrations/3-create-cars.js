@@ -26,7 +26,12 @@ module.exports = {
       },
       on_track: {
         type: Sequelize.BOOLEAN,
-				defaultValue: false
+				defaultValue: false,
+                allowNull: false,
+                set: function(value) {
+                    if (value === 'true') value = true;
+                    if (value === 'false') value = false;
+                    this.setDataValue('hidden', value);}
       },
       category_id: {
         type: Sequelize.INTEGER,

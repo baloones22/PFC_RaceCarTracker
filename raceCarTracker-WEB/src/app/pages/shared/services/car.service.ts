@@ -11,6 +11,9 @@ export interface Track {
   car: Car;
   round: Round;
 }
+export interface Send {
+  car: number
+}
 
 @Injectable({
   providedIn: "root",
@@ -25,7 +28,6 @@ export class CarService {
       .get(this.apiPath)
       .pipe(catchError(this.handleError), map(this.jsonDataToProcesses));
   }
-
   getById(id: number): Observable<Car> {
     const url = `${this.apiPath}/${id}`;
     return this.http
@@ -33,11 +35,11 @@ export class CarService {
       .pipe(catchError(this.handleError), map(this.jsonDataToCar));
   }
 
-  getCurrentCarTrack(): Observable<Track> {
-    const url = `${environment.URL_API}/track/current`;
+  getCurrentCarTrack(): Observable<Car> {
+    const url = `${environment.URL_API}/current`;
     return this.http
       .get(url)
-      .pipe(catchError(this.handleError), map(this.jsonDataToTrack));
+      .pipe(catchError(this.handleError), map(this.jsonDataToCar));
   }
 
   create(car: Car): Observable<Car> {
@@ -53,7 +55,24 @@ export class CarService {
       .put(url, car)
       .pipe(catchError(this.handleError), map(this.jsonDataToCar));
   }
-
+  delete(id: number): Observable<Car> {
+    const url = `${this.apiPath}/${id}`;
+    return this.http
+      .delete(url)
+      .pipe(catchError(this.handleError), map(this.jsonDataToCar));
+  }
+  sendToTrack(car: Send): Observable<Send> {
+    const url = `${environment.URL_API}/track/`;
+    return this.http
+      .post(url, car)
+      .pipe(catchError(this.handleError), map(this.jsonDataToSend));
+  }
+  takeTrack(car: Send): Observable<Send> {
+    const url = `${environment.URL_API}/track/${car.car}`;
+    return this.http
+      .delete(url)
+      .pipe(catchError(this.handleError), map(this.jsonDataToSend));
+  }
   private jsonDataToProcesses(jsonData: any): Car[] {
     const car: Car[] = [];
     jsonData.forEach((element: Car) => car.push(element as Car));
@@ -64,8 +83,8 @@ export class CarService {
     return jsonData as Car;
   }
 
-  private jsonDataToTrack(jsonData: any): Track {
-    return jsonData[0] as Track;
+  private jsonDataToSend(jsonData: any): Send {
+    return jsonData as Send;
   }
 
   private handleError(error: any): Observable<any> {

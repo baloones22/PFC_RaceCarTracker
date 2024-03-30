@@ -6,6 +6,8 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { PagesComponent } from "./pages.component";
+import { CategoryFormComponent } from './category-form/category-form.component';
+import { LaptimeFormComponent } from './laptime-form/laptime-form.component';
 
 const routes: Routes = [
   {
@@ -22,8 +24,20 @@ const routes: Routes = [
         component: CarFormComponent,
       },
       {
+        path: "category-form",
+        component: CategoryFormComponent,
+      },
+      {
+        path: "championship-form",
+        component: ChampionshipFormComponent,
+      },
+      {
         path: "round-form",
         component: RoundFormComponent,
+      },
+      {
+        path: "laptime-form",
+        component: LaptimeFormComponent,
       },
       {
         path: "panel",

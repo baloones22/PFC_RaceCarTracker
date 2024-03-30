@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import car_routes from './car';
+import round_routes from './rounds';
 import category_routes from './category';
 import championship_routes from './championship';
 import laptime_routes from './laptime';
@@ -17,6 +18,7 @@ routes.get('/', (req, res) => {
 });
 
 routes.use(car_routes);
+routes.use(round_routes);
 routes.use(category_routes);
 routes.use(championship_routes);
 routes.use(laptime_routes);

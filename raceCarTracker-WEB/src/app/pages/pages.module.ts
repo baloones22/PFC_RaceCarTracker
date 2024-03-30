@@ -26,9 +26,11 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RoundFormComponent } from './round-form/round-form.component';
 import { ChampionshipFormComponent } from './championship-form/championship-form.component';
 import { PanelShowComponent } from './panel-show/panel-show.component';
+import { CategoryFormComponent } from "./category-form/category-form.component";
+import { LaptimeFormComponent } from "./laptime-form/laptime-form.component";
 
 @NgModule({
-  declarations: [PagesComponent, HomeComponent, CarFormComponent, RoundFormComponent, ChampionshipFormComponent, PanelShowComponent],
+  declarations: [PagesComponent,CategoryFormComponent, HomeComponent, CarFormComponent, RoundFormComponent, ChampionshipFormComponent, PanelShowComponent,LaptimeFormComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,

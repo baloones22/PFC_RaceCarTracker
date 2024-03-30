@@ -37,7 +37,6 @@ class CarController {
 
     async index(req, res){
         try { 
-        const { category_id } = req.params;        
             const cars = await Car.findAll({
                 include: [{
                         model: Category,
@@ -76,49 +75,68 @@ class CarController {
                     }}
 
     async current_on_track(req, res){
-        try{ const car = await Car.findAll({
-            where:{on_track: true},include:[{
+        try{ 
+            const cars = await Car.findAll({where:{on_track: true},
+            include:[{
                     model: Category,
                     as: 'category'
                 }]});
-        if(car){
-            const timeboard = await Timeboard.findOne({
-                where:{
-                    car_id: car.id,
-                    finished_round: false},
-                include: [{
-                        model: Car,
-                        as: 'car' },
-                    {   model: Laptime,
-                        as: 'laptime' },
-                    {   model: Championship,
-                        as: 'championship'}]})
-            return res.json(timeboard);}
-        else {
-            return res.json(null)}}
-            catch (err) {
-                console.log(err)            
-                }}
+            if (!cars){
+                return res.status(404).json({ error: "Cars not found."});}
+            return res.json(cars);}
+        catch (err) {
+            console.log(err)}}
             
-            async on_track(req, res){
-                try{
-                const schema = Yup.object().shape({
-                car: Yup.string().required(),});
-                if(!( await schema.isValid(req.body))) {
-                    return res.status(400).json({ error: "validation fails from yup" })}
-                const carId=req.body.car
-                const car = await Car.findByPk(carId);
-                if(car.on_track==true){
-                    return res.status(400).json({ error: "Car already on a track."});  }
-                else {
-                    car.on_track=true
+    async on_track(req, res){
+        try{
+            const schema = Yup.object().shape({
+            car: Yup.string().required(),});
+            if(!( await schema.isValid(req.body))) {
+                return res.status(400).json({ error: "validation fails from yup" })}
+            const carId=req.body.car
+            const car = await Car.findByPk(carId);
+            if(car.on_track==true){
+                return res.status(400).json({ error: "Car already on a track."});  }
+            else {
+                car.on_track=true
+                await car.save()
+                return res.json(car)}}
+        catch (err) {
+            console.log(err)}}
+        async on_track(req, res){
+        try{
+            const schema = Yup.object().shape({
+            car: Yup.string().required(),});
+            if(!( await schema.isValid(req.body))) {
+                return res.status(400).json({ error: "validation fails from yup" })}
+            const carId=req.body.car
+            const car = await Car.findByPk(carId);
+            if(car.on_track==true){
+                return res.status(400).json({ error: "Car already on a track."});  }
+            else {
+                car.on_track=true
+                await car.save()
+                return res.json(car)}}
+        catch (err) {
+            console.log(err)}}
+
+
+        async out_track(req, res){
+            try{
+            const {carId} =req.params;
+            const car=await Car.findByPk(carId);        
+            if (!car){
+            return res.status(404).json({ error: "Car not found."});} 
+            if(car.on_track==false){
+                return res.status(400).json({ error: "Car already out of track."});  }
+            else {
+                car.on_track=false
+                await car.save()
                 return res.json(car)}}
                 catch (err) {
-                    console.log(err)            
-                    }}
-        
-        
-            async delete(req, res){
+                    onsole.log(err)}}
+
+    async delete(req, res){
                 const {carId} =req.params;
                 const car=await Car.findByPk(carId);        
                 if (!car){

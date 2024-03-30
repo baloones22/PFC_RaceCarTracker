@@ -4,6 +4,7 @@ class Laptime extends Model {
     static init(sequelize){
         super.init(
             {
+                battery: Sequelize.NUMBER,
                 lap_1: Sequelize.STRING,
                 lap_2: Sequelize.STRING,
                 lap_3: Sequelize.STRING,
@@ -16,6 +17,10 @@ class Laptime extends Model {
         );
 
         return this;
+    }
+    static associate(models){
+        this.belongsTo(models.Championship, {as: 'championship', foreignKey: 'championshipId'});
+        this.belongsTo(models.Car, {as: 'car', foreignKey: 'carId'});
     }
 
 }

@@ -9,10 +9,9 @@ import { NbToastrService } from "@nebular/theme";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { CarService } from "../shared/services/car.service";
-import { Category } from "./../shared/models/category-model";
-import { CategoryService } from "../shared/services/category.service";
 import { Championship, ChampionshipService } from "../shared/services/championship.service";
 import { RoundService } from "../shared/services/round.service";
+import { Car } from "../shared/models/car-model";
 
 @Component({
   selector: "app-round-form",
@@ -24,25 +23,22 @@ export class RoundFormComponent
   implements OnInit, OnDestroy, AfterContentChecked {
   private unsubscribe$ = new Subject<void>();
   roundForm!: UntypedFormGroup;
-  championshipForm!: UntypedFormGroup;
-  categories: Category[] = [];
-
+  cars: Car[] = [];
   pageTitle: string = "Cadastro de bateria";
   championships: Championship[] = [];
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private championshipService: ChampionshipService,
-    private categoryService: CategoryService,
     private roundService: RoundService,
+    private carService: CarService,
     private toastrService: NbToastrService
   ) { }
 
   ngOnInit(): void {
     this.getChampionships();
-    this.getCategories();
+    this.getCars();
     this.buildRoundForm();
-    this.buildChampionshipForm();
   }
 
   ngAfterContentChecked() {
@@ -57,11 +53,6 @@ export class RoundFormComponent
   submitForm() {
     this.createRound();
   }
-
-  submitChampioshipForm() {
-    this.createChampioship();
-  }
-
   private setCurrentAction() {
     // if (this.route.snapshot.url[0].path == "new") this.currentAction = "new";
     // else this.currentAction = "edit";
@@ -71,13 +62,7 @@ export class RoundFormComponent
     this.roundForm = this.formBuilder.group({
       name: [null],
       championship: [null],
-    });
-  }
-
-  private buildChampionshipForm() {
-    this.championshipForm = this.formBuilder.group({
-      name: [null],
-      category: [null],
+      car: [null],
     });
   }
 
@@ -95,15 +80,15 @@ export class RoundFormComponent
         }
       );
   }
-  getCategories() {
-    this.categoryService
+  getCars() {
+    this.carService
       .getAll().pipe(takeUntil(this.unsubscribe$)).subscribe(
         (ans: any) => {
-          this.categories = ans;
-          console.log(this.categories);
+          this.cars = ans;
+          console.log(this.cars);
         },
         (error) => {
-          alert("Não foi possível obter as categorias.");
+          alert("Não foi possível obter os carros.");
         }
       );
   }
@@ -112,14 +97,15 @@ export class RoundFormComponent
     const newRound = {
 
       "name": this.roundForm.get("name")?.value,
-      "championship": this.roundForm.get("championship")?.value,
+      "championshipId": this.roundForm.get("championship")?.value,
+      "carId": this.roundForm.get("car")?.value,
     }
     this.roundService
       .create(newRound)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
-        (car) => {
-          this.toastrService.success(`${car.name} foi cadastrado!`, "Sucesso");
+        (round) => {
+          this.toastrService.success(`${round.name} foi cadastrado!`, "Sucesso");
         },
         (errorResp) => {
           this.toastrService.danger(
@@ -134,36 +120,6 @@ export class RoundFormComponent
         }
       );
   }
-
-  private createChampioship() {
-    const newChampioship = {
-
-      "name": this.championshipForm.get("name")?.value,
-      "categoryId": this.championshipForm.get("category")?.value,
-    }
-    this.championshipService
-      .create(newChampioship)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (car) => {
-          this.toastrService.success(`${car.name} foi cadastrado!`, "Sucesso");
-          this.getChampionships();
-
-        },
-        (errorResp) => {
-          this.toastrService.danger(
-            `Falha ao cadastrar campeonato ${this.roundForm.get("name")?.value}!`,
-            "Erro"
-          );
-          console.log(errorResp);
-          this.toastrService.danger(
-            errorResp.error.description,
-            errorResp.error.error
-          );
-        }
-      );
-  }
-
   private markFormGroupTouched(formGroup: UntypedFormGroup) {
     (<any>Object).values(formGroup.controls).forEach((control: any) => {
       control.markAsTouched();

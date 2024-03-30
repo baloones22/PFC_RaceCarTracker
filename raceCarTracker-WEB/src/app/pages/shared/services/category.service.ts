@@ -26,7 +26,7 @@ export class CategoryService {
       .pipe(catchError(this.handleError), map(this.jsonDataToCategory));
   }
 
-  create(category: FormData): Observable<Category> {
+  create(category: Category): Observable<Category> {
     // category.transformer = category.transformer.id;
     return this.http
       .post(this.apiPath, category)

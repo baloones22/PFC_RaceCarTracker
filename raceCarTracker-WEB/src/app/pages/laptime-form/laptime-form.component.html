@@ -1,0 +1,188 @@
+<nb-card>
+    <nb-card-header class="bkg-header-yellow">{{pageTitle}}
+    </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="timeForm" (ngSubmit)="submitForm()">
+            <div class="form-row">
+            <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+                <label for="battery" class="label">Número da bateria</label>
+                <input fullWidth type="number" nbInput fullWidth id="battery" placeholder="Ex: 1"
+                        formControlName="battery">
+                </div>
+             <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+                <label for="championship" class="label">Campeonato</label>
+                <nb-select fullWidth id="championship" placeholder="Campeonato" formControlName="championship">
+                    <nb-option *ngFor="let championship of championships" [value]="championship.id">{{championship.name}}
+                    </nb-option>
+                </nb-select>
+            </div>
+            </div>
+
+        <div class="form-row">
+                <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+                    <label for="start_1" class="label">Partida Primeiro</label>
+                        <nb-select fullWidth id="start_1" placeholder="Carro" formControlName="start_1" (selectedChange)="getOntrack">
+                            <nb-option *ngFor="let car of cars" [value]="car.id">
+                                {{car.name}}
+                            </nb-option>
+                        </nb-select>
+                </div>
+            <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+                <label for="start_2" class="label">Partida Segundo</label>
+                    <nb-select fullWidth id="start_2" placeholder="Carro" formControlName="start_2">
+                        <nb-option *ngFor="let car of cars" [value]="car.id">
+                            {{car.name}}
+                        </nb-option>
+                    </nb-select>
+            </div>
+            <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+                <label for="start_3" class="label">Partida Terceiro</label>
+                    <nb-select fullWidth id="start_3" placeholder="Carro" formControlName="start_3">
+                        <nb-option *ngFor="let car of cars" [value]="car.id">
+                            {{car.name}}
+                        </nb-option>
+                    </nb-select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+                <label for="first_1" class="label">1º volta Primeiro</label>
+                    <nb-select fullWidth id="first_1" placeholder="Carro" formControlName="first_1">
+                        <nb-option *ngFor="let car of cars" [value]="car.id">
+                            {{car.name}}
+                        </nb-option>
+                    </nb-select>
+            </div>
+        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+            <label for="second_1" class="label">1º volta Segundo</label>
+                <nb-select fullWidth id="second_1" placeholder="Carro" formControlName="second_1">
+                    <nb-option *ngFor="let car of cars" [value]="car.id">
+                        {{car.name}}
+                    </nb-option>
+                </nb-select>
+        </div>
+        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+            <label for="third_1" class="label">1º volta Terceiro</label>
+                <nb-select fullWidth id="third_1" placeholder="Carro" formControlName="third_1">
+                    <nb-option *ngFor="let car of cars" [value]="car.id">
+                        {{car.name}}
+                    </nb-option>
+                </nb-select>
+        </div>
+        </div>
+        <div class="form-row">
+        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+            <label for="first_2" class="label">2º volta Primeiro</label>
+                <nb-select fullWidth id="first_2" placeholder="Carro" formControlName="first_2">
+                    <nb-option *ngFor="let car of cars" [value]="car.id">
+                        {{car.name}}
+                    </nb-option>
+                </nb-select>
+        </div>
+    <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+        <label for="second_2" class="label">2º volta Segundo</label>
+            <nb-select fullWidth id="second_2" placeholder="Carro" formControlName="second_2">
+                <nb-option *ngFor="let car of cars" [value]="car.id">
+                    {{car.name}}
+                </nb-option>
+            </nb-select>
+    </div>
+    <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+        <label for="third_2" class="label">2º volta Terceiro</label>
+            <nb-select fullWidth id="third_2" placeholder="Carro" formControlName="third_2">
+                <nb-option *ngFor="let car of cars" [value]="car.id">
+                    {{car.name}}
+                </nb-option>
+            </nb-select>
+    </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+                <label for="first_3" class="label">3º volta Primeiro</label>
+                    <nb-select fullWidth id="first_3" placeholder="Carro" formControlName="first_3">
+                        <nb-option *ngFor="let car of cars" [value]="car.id">
+                            {{car.name}}
+                        </nb-option>
+                    </nb-select>
+            </div>
+        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+            <label for="second_3" class="label">3º volta Segundo</label>
+                <nb-select fullWidth id="second_3" placeholder="Carro" formControlName="second_3">
+                    <nb-option *ngFor="let car of cars" [value]="car.id">
+                        {{car.name}}
+                    </nb-option>
+                </nb-select>
+        </div>
+        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+            <label for="third_3" class="label">3º volta Terceiro</label>
+                <nb-select fullWidth id="third_3" placeholder="Carro" formControlName="third_3">
+                    <nb-option *ngFor="let car of cars" [value]="car.id">
+                        {{car.name}}
+                    </nb-option>
+                </nb-select>
+        </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+                <label for="first_4" class="label">4º volta Primeiro</label>
+                    <nb-select fullWidth id="first_4" placeholder="Carro" formControlName="first_4">
+                        <nb-option *ngFor="let car of cars" [value]="car.id">
+                            {{car.name}}
+                        </nb-option>
+                    </nb-select>
+            </div>
+        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+            <label for="second_4" class="label">4º volta Segundo</label>
+                <nb-select fullWidth id="second_4" placeholder="Carro" formControlName="second_4">
+                    <nb-option *ngFor="let car of cars" [value]="car.id">
+                        {{car.name}}
+                    </nb-option>
+                </nb-select>
+        </div>
+        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+            <label for="third_4" class="label">4º volta Terceiro</label>
+                <nb-select fullWidth id="third_4" placeholder="Carro" formControlName="third_4">
+                    <nb-option *ngFor="let car of cars" [value]="car.id">
+                        {{car.name}}
+                    </nb-option>
+                </nb-select>
+        </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+                <label for="first_5" class="label">5º volta Primeiro</label>
+                    <nb-select fullWidth id="first_5" placeholder="Carro" formControlName="first_5">
+                        <nb-option *ngFor="let car of cars" [value]="car.id">
+                            {{car.name}}
+                        </nb-option>
+                    </nb-select>
+            </div>
+        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+            <label for="second_5" class="label">5º volta Segundo</label>
+                <nb-select fullWidth id="second_5" placeholder="Carro" formControlName="second_5">
+                    <nb-option *ngFor="let car of cars" [value]="car.id">
+                        {{car.name}}
+                    </nb-option>
+                </nb-select>
+        </div>
+        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+            <label for="third_5" class="label">5º volta Terceiro</label>
+                <nb-select fullWidth id="third_5" placeholder="Carro" formControlName="third_5">
+                    <nb-option *ngFor="let car of cars" [value]="car.id">
+                        {{car.name}}
+                    </nb-option>
+                </nb-select>
+        </div>
+        
+        </div>
+        <div class="form-row d-flex justify-content-end mt-4">
+                <button class="mr-3" type="submit" nbButton size="medium" status="basic">
+                    CANCELAR
+                </button>
+                <button type="submit" class="float-right" nbButton size="medium" status="info">
+                    SALVAR
+                </button>
+        </div>
+        </form> 
+    </nb-card-body>
+</nb-card> 
