@@ -7,19 +7,9 @@
         <div class="d-flex flex-row justify-content-between mb-4">
             <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
                 <label for="championship" class="label">Campeonato</label>
-                <nb-select (selectedChange)="getRoundByChampionship($event)" fullWidth placeholder="Campeonato">
+                <nb-select (selectedChange)="getLapsByChampionship($event)" fullWidth placeholder="Campeonato">
                     <nb-option *ngFor="let championship of championships" [value]="championship.id">
                         {{championship.name}}
-                    </nb-option>
-                </nb-select>
-            </div>
-
-            <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
-                <label for="championship" class="label">Baterias</label>
-                <nb-select [disabled]="rounds.length ==0" [(selected)]="selected"
-                    (selectedChange)="getCarsByRound($event)" fullWidth placeholder="Bateria">
-                    <nb-option *ngFor="let round of rounds" [value]="round.id">
-                        {{round.name}}
                     </nb-option>
                 </nb-select>
             </div>
@@ -35,29 +25,38 @@
             </div>
         </div>
 
+        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
+            <label for="ontrack" class="label">Selecione carro:</label>
+            <nb-select (selectedChange)="getInfo($event)" fullWidth id="ontrack" placeholder="Carro">
+                <nb-option *ngFor="let car of cars" [value]="car.id">
+                    {{car.name}}
+                </nb-option>
+            </nb-select>
+        </div>
+
         <div class="d-flex flex-row justify-content-around">
             <div class="mb-4">
                 <div>
-                    <strong>Nome:</strong> {{currentCar?.car.name}}
+                    <strong>Nome:</strong> {{this.car_name}}
                 </div>
                 <div>
-                    <strong>Modelo:</strong> {{currentCar?.car.model}}
+                    <strong>Modelo:</strong> {{this.car_model}}
                 </div>
                 <div>
-                    <strong>Proprietário:</strong> {{currentCar?.car.owner}}
+                    <strong>Proprietário:</strong> {{this.car_owner}}
                 </div>
                 <div>
-                    <strong>Placa:</strong> {{currentCar?.car.plate}}
+                    <strong>Placa:</strong> {{this.car_plate}}
                 </div>
             </div>
 
 
             <div>
                 <div>
-                    <strong>Campeonato:</strong> {{currentCar?.round.championship.name}}
+                    <strong>Campeonato:</strong> {{this.car_plate}}
                 </div>
                 <div>
-                    <strong>Bateria:</strong> {{currentCar?.round.name}}
+                    <strong>Bateria:</strong> {{this.car_plate}}
                 </div>
             </div>
         </div>
@@ -66,12 +65,17 @@
 
         <table>
             <tr>
-                <th>Volta</th>
-                <th>Tempo</th>
+                <th>Corredor</th>
+                <th>Volta 1</th>
+                <th>Volta 2</th>
+                <th>Volta 3</th>
             </tr>
-            <tr *ngFor="let lap of laps; let i = index;">
-                <td>{{i +1}}</td>
-                <td>{{lap?.time}}</td>
+            <tr *ngFor="let lap of laps_championship; let i = index;"  >
+                <td>{{this.name_car[lap.carId]}}</td>                
+                <td>{{lap.lap_1}}</td>
+                <td>{{lap.lap_2}}</td>
+                <td>{{lap.lap_3}}</td>
+            
             </tr>
         </table>
 

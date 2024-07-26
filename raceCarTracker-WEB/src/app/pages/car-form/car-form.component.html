@@ -2,6 +2,8 @@
     <nb-card-header class="bkg-header-yellow">{{pageTitle}}
     </nb-card-header>
     <nb-card-body>
+
+        
         <form [formGroup]="carForm" (ngSubmit)="submitForm()">
             <div class="form-row">
                 <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
@@ -46,48 +48,4 @@
             </div>
         </form>
     </nb-card-body>
-</nb-card>
-
-<nb-card>
-<nb-card-header class="bkg-header-yellow">{{pageTitle2}}
-</nb-card-header>
-<nb-card-body>
-    <form [formGroup]="carForm1" (ngSubmit)="sendForm()">
-    <div class="form-row resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
-        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
-            <label for="car" class="label">Selecione um Carro</label>
-            <nb-select fullWidth id="car" placeholder="Carro" formControlName="car" (selectedChange)="getCars">
-                <nb-option *ngFor="let car of cars" [value]="car.id">{{car.name}}
-                </nb-option>
-            </nb-select>
-        </div>
-    </div>
-    <div class="form-row d-flex justify-content-end mt-4">
-        <button class="mr-3" type="delete" nbButton size="medium" status="basic" style="background-color: red;border-color: black;">
-            DELETAR
-        </button>
-        <button type="submit" class="float-right" nbButton size="medium" status="info">
-            MANDAR PARA A PISTA
-        </button>
-    </div>
-</form>
-</nb-card-body>
-<nb-card-body>
-    <form [formGroup]="carForm1" (ngSubmit)="getback()">
-    <div class="form-row resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
-        <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
-            <label for="ontrack" class="label">Selecione um Carro</label>
-            <nb-select fullWidth id="car_1" placeholder="Carro" formControlName="car" (selectedChange)="getOntrack">
-                <nb-option *ngFor="let car of ontrack" [value]="car.id">{{car.name}}
-                </nb-option>
-            </nb-select>
-        </div>
-    </div>
-    <div class="form-row d-flex justify-content-end mt-4">
-        <button type="submit" class="float-right" nbButton size="medium" status="info">
-            TIRAR DA PISTA
-        </button>
-    </div>
-</form>
-</nb-card-body>
 </nb-card>

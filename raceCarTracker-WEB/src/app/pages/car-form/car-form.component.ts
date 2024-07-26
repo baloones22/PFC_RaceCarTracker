@@ -61,9 +61,13 @@ export class CarFormComponent
  }
  sendForm(){
   this.sendCar();
+  this.getCars();
+  this.getOntrack();
  }
  getback(){
   this.takeCar();
+  this.getCars();
+  this.getOntrack();
  }
   private setCurrentAction() {
     // if (this.route.snapshot.url[0].path == "new") this.currentAction = "new";
@@ -97,8 +101,6 @@ export class CarFormComponent
         }
       );
   }
- 
-
   getOntrack(){
     this.carService
       .getCurrentCarTrack().pipe(takeUntil(this.unsubscribe$)).subscribe(
@@ -111,7 +113,6 @@ export class CarFormComponent
         }
       )
   }
-
   getCars() {
     this.carService
       .getAll().pipe(takeUntil(this.unsubscribe$)).subscribe(

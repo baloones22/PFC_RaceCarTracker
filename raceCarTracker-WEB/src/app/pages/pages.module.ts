@@ -28,9 +28,11 @@ import { ChampionshipFormComponent } from './championship-form/championship-form
 import { PanelShowComponent } from './panel-show/panel-show.component';
 import { CategoryFormComponent } from "./category-form/category-form.component";
 import { LaptimeFormComponent } from "./laptime-form/laptime-form.component";
+import { ScreenTimeComponent } from "./screen-time/screen-time.component";
+import { DataService } from "../shared/data.service";
 
 @NgModule({
-  declarations: [PagesComponent,CategoryFormComponent, HomeComponent, CarFormComponent, RoundFormComponent, ChampionshipFormComponent, PanelShowComponent,LaptimeFormComponent],
+  declarations: [PagesComponent,CategoryFormComponent, HomeComponent, CarFormComponent, RoundFormComponent, ChampionshipFormComponent, PanelShowComponent,LaptimeFormComponent,ScreenTimeComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,
@@ -50,6 +52,7 @@ import { LaptimeFormComponent } from "./laptime-form/laptime-form.component";
     NbSelectModule,
     NbToastrModule.forRoot(),
   ],
+  providers: [DataService],
   // providers: [NbThemeModule.forRoot().providers as Provider],
 })
 export class PagesModule {}

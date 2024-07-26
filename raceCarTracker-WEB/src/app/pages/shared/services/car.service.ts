@@ -21,6 +21,8 @@ export interface Send {
 export class CarService {
   private apiPath = `${environment.URL_API}/cars`;
 
+  private apiPath1 = `${environment.URL_API}/car`;
+
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Car[]> {
@@ -29,7 +31,7 @@ export class CarService {
       .pipe(catchError(this.handleError), map(this.jsonDataToProcesses));
   }
   getById(id: number): Observable<Car> {
-    const url = `${this.apiPath}/${id}`;
+    const url = `${this.apiPath1}/${id}`;
     return this.http
       .get(url)
       .pipe(catchError(this.handleError), map(this.jsonDataToCar));

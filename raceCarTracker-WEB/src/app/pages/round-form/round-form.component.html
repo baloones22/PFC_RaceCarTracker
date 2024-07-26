@@ -30,20 +30,6 @@
                         <div *ngIf="processForm.get('interested').errors.maxlength">*Máximo de 20 caracteres</div>
                     </div> -->
                 </div>
-                <div class="form-group resp-form-row column ml-sm-4 ml-md-4 ml-lg-4">
-                    <label for="car" class="label">Carro</label>
-                    <nb-select fullWidth id="car" placeholder="Carro" formControlName="car">
-                        <nb-option *ngFor="let car of cars" [value]="car.id">
-                            {{car.name}}
-                        </nb-option>
-                    </nb-select>
-                    <!-- <div class="text-danger"
-                        *ngIf="processForm.get('interested').invalid && processForm.get('interested').touched">
-                        <div *ngIf="processForm.get('interested').errors.required">*Campo obrigatório</div>
-                        <div *ngIf="processForm.get('interested').errors.minlength">*Caracteres insuficientes</div>
-                        <div *ngIf="processForm.get('interested').errors.maxlength">*Máximo de 20 caracteres</div>
-                    </div> -->
-                </div>
             </div>
             <div class="form-row d-flex justify-content-end mt-4">
                 <button class="mr-3" type="submit" nbButton size="medium" status="basic">

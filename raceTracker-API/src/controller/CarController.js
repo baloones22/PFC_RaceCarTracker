@@ -60,10 +60,10 @@ class CarController {
             }}
     async showbycategory(req, res){
                 try{
-                const { categoryId } = req.params;
+                const { category_Id } = req.params;
                 const car = await Car.findAll({
                     where: {
-                        categoryId
+                        category_Id
                     },
                 include:[
                     { model: Category,

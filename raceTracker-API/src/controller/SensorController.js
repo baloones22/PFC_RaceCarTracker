@@ -22,7 +22,19 @@ class SensorController {
         if (!sensor){
         return res.status(404).json({ error: "Sensor not found."});}
         const rowCount = await Sensor.destroy({ where: { sensor: sensorId} });
-        return res.status(204).json({ error: "Sensor deleted."});}        
+        return res.status(204).json({ error: "Sensor deleted."});} 
+        
+    async deleteAll(req, res) {
+        try {
+            await Sensor.destroy({ where: {} }); // Exclui todos os registros
+            return res.status(204).json({ error: "All sensors deleted." });
+            
+            
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({ error: "Internal server error" });
+        }
+    }       
       
 
     async index(req, res){

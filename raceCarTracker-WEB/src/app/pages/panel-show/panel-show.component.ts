@@ -1,19 +1,13 @@
-import { KartWsService } from './../shared/services/kart-ws.service';
 import { Round } from './../shared/models/round-model';
 import { RoundService } from './../shared/services/round.service';
 import { Component, OnInit } from '@angular/core';
+import { Laptime } from '../shared/models/laptime-model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CarService } from '../shared/services/car.service';
 import { Championship, ChampionshipService } from '../shared/services/championship.service';
 import { Car } from '../shared/models/car-model';
-
-
-export interface Lap {
-  time?: string,
-  round?: string,
-  car?: string,
-}
+import { NbToastrService } from "@nebular/theme";
 
 @Component({
   selector: 'app-panel-show',
@@ -21,26 +15,33 @@ export interface Lap {
   styleUrls: ['./panel-show.component.scss']
 })
 export class PanelShowComponent implements OnInit {
+  
   private unsubscribe$ = new Subject<void>();
   public currentCar: any;
   championships: Championship[] = [];
   public rounds: Round[] = [];
   public cars: Car[] = [];
   selected: any;
-  laps: Lap[] = [];
+  ontracks: Car[] = [];
+  laps_championship: Laptime[] = [];
+  laps_car: Laptime[] = [];
+  laps_round: Laptime[] = [];
+  car_name: any  ="";
+  car_owner: any ="";
+  car_plate: any ="";
+  car_model: any ="";
+  name_car: any =[];
 
   constructor(
     private carService: CarService,
     private championshipService: ChampionshipService,
     private roundService: RoundService,
-    private kartWsService: KartWsService,
+    private toastrService: NbToastrService,
   ) { }
 
   ngOnInit(): void {
-    this.getCurrentCar();
     this.getChampionships();
     this.getCars();
-    this.wsConnect();
   }
 
   ngOnDestroy(): void {
@@ -48,35 +49,22 @@ export class PanelShowComponent implements OnInit {
     this.unsubscribe$.complete();
   }
 
-
-  getCurrentCar(): void {
-    this.carService
-      .getCurrentCarTrack()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (ans: any) => {
-          this.currentCar = ans;
-          console.log(this.currentCar);
-        },
-        (error) => {
-          alert('Não há car na pista!');
-        }
-      );
+  getInfo(event: any){
+    this.currentCar = event;
+    this.getCurrentCar();
   }
-
-  getCarsByRound(event: any): void {
-    this.carService
-      .getCurrentCarTrack()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (ans: any) => {
-          this.currentCar = ans;
-          console.log(this.currentCar);
-        },
-        (error) => {
-          alert('Não há car na pista!');
-        }
-      );
+  getCurrentCar(): void {
+    console.log(this.currentCar);
+    this.carService.getById(this.currentCar).pipe(takeUntil(this.unsubscribe$)).subscribe(
+      (ans: Car)=>{
+        this.car_name=ans.name;
+        this.car_owner=ans.owner;
+        this.car_plate=ans.plate;
+        this.car_model=ans.model;
+      },
+      (error) => {
+        alert("Não foi possível obter os carros na pista.");
+      })
   }
 
   getCars(): void {
@@ -109,52 +97,57 @@ export class PanelShowComponent implements OnInit {
       );
   }
 
-  getRoundByChampionship(event: any) {
-    console.log(event);
-
+  getLapsByChampionship(event: any) {
     this.roundService
-      .getRoundsByChampionship(event)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
+      .getRoundsByChampionship(event).pipe(takeUntil(this.unsubscribe$)).subscribe(
         (ans: any) => {
-          this.rounds = ans;
-          console.log(this.championships);
+          this.laps_championship= ans;
+          //console.log(this.laps_championship);
+          this.getCarNameById();
         },
         (error) => {
           alert('Não foi possível obter os baterias.');
         }
       );
   }
+  getCarNameById(){
+    for (var i=0; i<this.laps_championship.length; i++){
+      const carid =this.laps_championship[i].carId
+    this.carService.getById(carid).pipe(takeUntil(this.unsubscribe$)).subscribe(
+      (ans: Car) => {
+        console.log(ans.name);
+        console.log(carid);
+        this.name_car[carid]=ans.name;
+      },
+      (error) => {
+        alert('não foi possivel obter os carros!');
+      }
+    );
+  console.log(this.name_car[i])}
+ }
 
   sendCarToTrack(event: any) {
-    // console.log(this.selected);
+    const  sendCar={
+    car: event,}
+    this.carService.sendToTrack(sendCar).pipe(takeUntil(this.unsubscribe$)).subscribe(
+      (car) => {
+     // this.submittingForm = false;
+     this.toastrService.success(`${sendCar.car} foi cadastrado!`, "Sucesso");
+   },
+   (errorResp) => {
+     this.toastrService.danger(
+       `Falha ao cadastrar ${event}!`,
+       "Erro"
+     );
 
-    this.roundService
-      .sendCarTrack({ car: event, round: this.selected })
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (ans: any) => {
-          console.log(ans);
-          this.getCurrentCar();
-        },
-        (error) => {
-          alert('Não foi possível enviar carro para a pista.');
-        }
-      );
-  }
+     console.log(errorResp);
 
-  wsConnect() {
-    this.laps = [];
-    this.kartWsService.listen('toWebsite')
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((data: { action: string, payload: Lap }) => {
-        console.log(data);
-        this.laps.push(data.payload as Lap);
-      });
-  }
+     this.toastrService.danger(
+       errorResp.error.description,
+       errorResp.error.error
+     );
+    });
 
-  emit() {
-    this.kartWsService.emit('registerLap', { time: 'fasdfasdfasdf' });
   }
 }
 

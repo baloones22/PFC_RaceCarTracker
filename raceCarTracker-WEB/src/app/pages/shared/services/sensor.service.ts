@@ -37,10 +37,10 @@ export class SensorService {
       .put(url, sensor)
       .pipe(catchError(this.handleError), map(this.jsonDataToSensor));
   }
-  deleteAll():Observable<Sensor[]>{
+  deleteAll():Observable<Sensor>{
     return this.http
       .delete(this.apiPath)
-      .pipe(catchError(this.handleError), map(this.jsonDataToProcesses));
+      .pipe(catchError(this.handleError), map(this.jsonDataToSensor));
   }
   private jsonDataToProcesses(jsonData: any): Sensor[] {
     const sensor: Sensor[] = [];

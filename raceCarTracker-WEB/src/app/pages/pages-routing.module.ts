@@ -8,6 +8,7 @@ import { HomeComponent } from "./home/home.component";
 import { PagesComponent } from "./pages.component";
 import { CategoryFormComponent } from './category-form/category-form.component';
 import { LaptimeFormComponent } from './laptime-form/laptime-form.component';
+import { ScreenTimeComponent } from './screen-time/screen-time.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,9 @@ const routes: Routes = [
       {
         path: "panel",
         component: PanelShowComponent,
+      },{
+        path: "screen",
+        component: ScreenTimeComponent,
       },
     ],
   },

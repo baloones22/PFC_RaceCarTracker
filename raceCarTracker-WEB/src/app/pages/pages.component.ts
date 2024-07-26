@@ -31,11 +31,6 @@ export class PagesComponent implements OnInit {
       label: "Cadastro Categoria",
     },
     {
-      url: "/round-form",
-      icon: "dashboard_customize",
-      label: "Cadastro de baterias",
-    },
-    {
       url: "/laptime-form",
       icon: "dashboard_customize",
       label: "Cadastro de Tempos",
@@ -44,6 +39,11 @@ export class PagesComponent implements OnInit {
       url: "/panel",
       icon: "emoji_events",
       label: "Painel",
+    },
+    {
+      url: "/screen",
+      icon: "home",
+      label: "Screen Visor",
     },
   ];
 
