@@ -5,7 +5,8 @@ class Sensor extends Model {
         super.init(
             {
                 time: Sequelize.STRING,
-                sensor: Sequelize.INTEGER             
+                sensor: Sequelize.INTEGER
+                plate: Sequelize.INTEGER
             },
             {
                 sequelize
